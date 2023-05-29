@@ -1,18 +1,23 @@
-
-//const { mostrarMenu, pausa } = require("./helpers/messages");
-
 const { persistirDB, leerDB } = require('./helpers/db-interactions');
 const { inquirerMenu, pausa, leerInput } = require('./helpers/inquirer');
 const Tareas = require('./models/tareas');
-
 require("colors");
 
+
+/*************************************************
+* Método main de la aplicación que carga el menú
+*************************************************/
 const main = async () => {
 
+  
   let option = '';
   const tareas = new Tareas();
 
-  //Se lee la bd para ver si existen tareas
+
+  /*************************************************
+  * Se lee bd.json, si existen tareas las carga en 
+  * una nueva instancia
+  *************************************************/
   const tareasLeidas = leerDB();
   if (tareasLeidas) {
     tareas.cargarTareas(tareasLeidas);
@@ -20,10 +25,9 @@ const main = async () => {
 
   do {
 
-    option = await inquirerMenu(); // Imprime el menú y captura la opción seleccionada por el usuario
-
+    // Imprime el menú y captura la opción seleccionada por el usuario
+    option = await inquirerMenu(); 
     switch (option) {
-
       case '1':
         const desc = await leerInput('Por favor ingrese la descripción de la tarea:'); //Pide al usuario ingresar descripción de la tarea y crea la tarea.
         tareas.crearTarea(desc);
@@ -34,6 +38,7 @@ const main = async () => {
         break;
     }
 
+    //Se guarda la data existente en memoria
     persistirDB(tareas.listarTareas);
 
     console.log('\n');
@@ -44,4 +49,7 @@ const main = async () => {
 
 };
 
+/*************************************************
+* Ejecucion del main() de la aplicación
+*************************************************/
 main();

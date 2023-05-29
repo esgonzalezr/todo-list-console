@@ -1,8 +1,17 @@
 const inquirer = require('inquirer');
 require("colors");
 
+
+/*
+    Nota: La librería inquirer trabaja con base en promesas,
+    por lo tanto, la implementación de todas las funciones se
+    usen para que desplieguen menús deben ser async.
+*/
+
+
 /*****************************************
- * Inquirer para pausar el menú principal
+ * Inquirer que despliega el menú principal
+ * y sus opciones
  *****************************************/
 const options = [
     {
@@ -53,7 +62,8 @@ const inquirerMenu = async () => {
 }
 
 /***************************************
- * Inquirer para pausar los prompts
+ * Inquirer para pausar los prompts de
+ * la aplicación
  ***************************************/
 const pausa = async () => {
 

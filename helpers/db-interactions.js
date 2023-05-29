@@ -2,10 +2,17 @@ const fs = require('node:fs');
 
 const archivo = './db/data.json';
 
+
+/*****************************************
+ * Método para escribir en db.json
+ *****************************************/
 const persistirDB = (data) => {
     fs.writeFileSync(archivo, JSON.stringify(data));
 }
 
+/*****************************************
+ * Método para leer de db.json
+ *****************************************/
 const leerDB = () => {
     if (!fs.existsSync(archivo)) {
         return;
@@ -16,6 +23,7 @@ const leerDB = () => {
     return parsedFile;
 }
 
+/************************/
 module.exports = {
     persistirDB,
     leerDB
