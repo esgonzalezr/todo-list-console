@@ -45,7 +45,7 @@ const options = [
 const inquirerMenu = async () => {
     console.clear();
     console.log("========================".green);
-    console.log(" Seleccione una opción")
+    console.log("    TO-DO List App")
     console.log("========================\n".green);
 
     const { opcion } = await inquirer.prompt(options);
