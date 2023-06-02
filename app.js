@@ -1,5 +1,5 @@
 const { persistirDB, leerDB } = require('./helpers/db-interactions');
-const { inquirerMenu, pausa, leerInput } = require('./helpers/inquirer');
+const { inquirerMenu, pausa, leerInput, listadoTareasBorrar } = require('./helpers/inquirer');
 const Tareas = require('./models/tareas');
 require("colors");
 
@@ -9,7 +9,7 @@ require("colors");
 *************************************************/
 const main = async () => {
 
-  
+
   let option = '';
   const tareas = new Tareas();
 
@@ -26,15 +26,32 @@ const main = async () => {
   do {
 
     // Imprime el menú y captura la opción seleccionada por el usuario
-    option = await inquirerMenu(); 
+    option = await inquirerMenu();
+
     switch (option) {
       case '1':
-        const desc = await leerInput('Por favor ingrese la descripción de la tarea:'); //Pide al usuario ingresar descripción de la tarea y crea la tarea.
-        tareas.crearTarea(desc);
+        console.log();
+        const { descripcion } = await leerInput('Por favor ingrese la descripción de la tarea:'); //Pide al usuario ingresar descripción de la tarea y crea la tarea.
+        tareas.crearTarea(descripcion);
         break;
 
       case '2':
-        console.log(tareas.listarTareas);
+        //console.log(tareas.listarTareas);
+        tareas.listadoCompleto();
+        break;
+      case '3':
+        tareas.listarPorEstado(true);
+        break;
+      case '4':
+        tareas.listarPorEstado(false);
+        break;
+      case '6':
+        const lista = await listadoTareasBorrar(tareas.listarTareas);
+
+        if (lista.lengt > 0) {
+          tareas.borrarTareas(lista);
+        }
+
         break;
     }
 

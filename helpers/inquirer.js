@@ -1,13 +1,12 @@
 const inquirer = require('inquirer');
-require("colors");
 
+require("colors");
 
 /*
     Nota: La librería inquirer trabaja con base en promesas,
     por lo tanto, la implementación de todas las funciones se
     usen para que desplieguen menús deben ser async.
 */
-
 
 /*****************************************
  * Inquirer que despliega el menú principal
@@ -73,7 +72,7 @@ const pausa = async () => {
             name: 'pausa',
             message: `Presione ${'ENTER'.green} para continuar\n`
         }
-    ]
+    ];
     await inquirer.prompt(question);
     return;
 }
@@ -102,9 +101,35 @@ const leerInput = async (desc) => {
 
 }
 
+/*************************************************
+ * Submenú para eliminar una tarea
+**************************************************/
+const listadoTareasBorrar = async (tareas = []) => {
 
+    // Se modifica el array (map) para que tenga la estructura de las choices
+    const choices = tareas.map((tarea, index) => {
+        return { value: tarea.id, name: `${index + 1}. `.green + `${tarea.descripcion}`.white }
+    });
+
+    //Se arma el listado de opciones
+    const lista = [
+        {
+            type: 'checkbox',
+            name: 'selecciones',
+            message: 'Seleccione las tareas que desea borrar\n',
+            choices: choices
+        }
+    ];
+
+    console.log();
+    const { selecciones } = await inquirer.prompt(lista);
+    return selecciones;
+}
+
+/**********************************/
 module.exports = {
     inquirerMenu,
     pausa,
-    leerInput
+    leerInput,
+    listadoTareasBorrar
 }
